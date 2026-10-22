@@ -19,7 +19,11 @@ FROM php:8.2.12-apache
 # manually. For detailed instructions for installing extensions can be found, see
 # https://github.com/docker-library/docs/tree/master/php#how-to-install-more-php-extensions
 # The following code blocks provide examples that you can edit and use.
-#
+
+# Installa l'estensione PDO MySQL per collegare PHP al database.
+RUN docker-php-ext-install pdo_mysql
+
+
 # Add core PHP extensions, see
 # https://github.com/docker-library/docs/tree/master/php#php-core-extensions
 # This example adds the apt packages for the 'gd' extension's dependencies and then

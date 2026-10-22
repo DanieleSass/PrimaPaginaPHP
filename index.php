@@ -1,3 +1,35 @@
+
+<?php
+// Esegue il codice quando viene inviato il form.
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    // Legge i dati inseriti nel form.
+    $nome = $_POST["nome"] ?? "";
+    $cognome = $_POST["cognome"] ?? "";
+    $email = $_POST["email"] ?? "";
+    $password = $_POST["password"] ?? "";
+
+
+
+     // Si collega al database MySQL.
+    $pdo = new PDO(
+        "mysql:host=db;dbname=scuola;",
+        getenv("DB_USER"),
+        getenv("DB_PASSWORD")
+    );
+// Prepara la query di inserimento.
+    $sql = "INSERT INTO Studente (Nome, Cognome, Email, Psw)
+            VALUES (?, ?, ?, ?)";
+    $query = $pdo->prepare($sql);
+    // Inserisce i dati al posto dei quattro punti interrogativi.
+    $query->execute([$nome, $cognome, $email, $password]);
+    // Evita di ripetere l'inserimento aggiornando il browser.
+    header("Location: index.php?registrato=1");
+    exit;
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -90,7 +122,7 @@ button:active {
 <body>
     <h1>FORM</h1>
 
-    <form>
+    <form method="post" action="index.php">
         <div id="messaggio">
             <?php   
             echo "Ciao, inserisci le tue credenziali!";
@@ -98,15 +130,15 @@ button:active {
         </div>
 
 
-        <input type="text" id="nome" placeholder="nome">
+        <input type="text" id="nome" name="nome" placeholder="nome">
         <br>
-        <input type="text" id="cognome" placeholder="cognome">
+        <input type="text" id="cognome" name="cognome" placeholder="cognome">
         <br>
-        <input type="email" id="email" placeholder="abc@gmail.com">
+        <input type="email" id="email" name="email" placeholder="abc@gmail.com">
         <br>
-        <input type="password" id="password" placeholder="***">
+        <input type="password" id="password" name="password" placeholder="***">
         <br>
-        <button>INVIA</button>
+        <button type="submit">INVIA</button>
 
     </form>
 
