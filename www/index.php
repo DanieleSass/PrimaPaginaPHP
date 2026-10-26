@@ -10,7 +10,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $password = $_POST["password"] ?? "";
 
 
-
      // Si collega al database MySQL.
     $pdo = new PDO(
         "mysql:host=db;dbname=scuola;",
@@ -141,6 +140,11 @@ button:active {
         <button type="submit">INVIA</button>
 
     </form>
+    <br>
+    <form method="get" action="studenti.php">
+        <button type="submit">Mostra tutti gli studenti</button>
+    </form>
+
 
 </body>
 </html> 
